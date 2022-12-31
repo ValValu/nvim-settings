@@ -53,5 +53,14 @@ return require('packer').startup(function(use)
   use('folke/zen-mode.nvim')
   use('github/copilot.vim')
   use('simrat39/rust-tools.nvim')
+  use({
+	"Pocco81/auto-save.nvim",
+	config = function()
+		 require("auto-save").setup {
+			-- your config goes here
+			-- or just leave it empty :)
+		 }
+	end,
+  })
 end)
 
