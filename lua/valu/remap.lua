@@ -14,8 +14,8 @@ mapper("n", "<C-k>", "<C-w>k")
 mapper("n", "<C-l>", "<C-w>l")
 
 
--- Fugitive
 vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
+-- Fugitive
 
 -- Harpoon
 local mark = require("harpoon.mark")
@@ -32,7 +32,7 @@ vim.keymap.set("n", "<C-e>", harpoon.toggle_quick_menu)
 --["<C-Space>"] = cmp.mapping.complete(),
 ---- disable completion with tab
 ---- this helps with copilot setup
---cmp_mappings['<Tab>'] = nil
+--cmp_mappings
 --cmp_mappings['<S-Tab>'] = nil
 --vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
 --vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
