@@ -31,12 +31,12 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 
 -- disable completion with tab
 -- this helps with copilot setup
-cmp_mappings['<Tab>'] = nil
-cmp_mappings['<S-Tab>'] = nil
-
-lsp.setup_nvim_cmp({
-  mapping = cmp_mappings
-})
+-- cmp_mappings['<Tab>'] = nil
+-- cmp_mappings['<S-Tab>'] = nil
+--
+-- lsp.setup_nvim_cmp({
+--   mapping = cmp_mappings
+-- })
 
 lsp.set_preferences({
     suggest_lsp_servers = false,
@@ -57,10 +57,6 @@ lsp.on_attach(function(client, bufnr)
       vim.cmd.LspStop('eslint')
       return
   end
-
-  vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
-  vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
-  vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
 end)
 
 lsp.setup()

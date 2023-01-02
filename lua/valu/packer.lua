@@ -52,7 +52,6 @@ return require('packer').startup(function(use)
   use('mfussenegger/nvim-dap')
   use('folke/zen-mode.nvim')
   use('github/copilot.vim')
-  use('simrat39/rust-tools.nvim')
   use({
 	"Pocco81/auto-save.nvim",
 	config = function()
@@ -67,5 +66,11 @@ return require('packer').startup(function(use)
     config = function() require("nvim-autopairs").setup {} end
   }
 
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+  }
 end)
 

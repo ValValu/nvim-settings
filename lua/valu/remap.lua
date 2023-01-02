@@ -1,21 +1,12 @@
 local mapper = function(mode, key, result) vim.keymap.set(mode, key, result, { noremap = true, silent = true }) end
 local no_plugins = require("valu.packer")
-
+local opts = { noremap = true }
 -- Essentials
 vim.g.mapleader = " " -- set leader to space
 mapper("n", "<Leader>no", ":nohl<CR>") -- remove searching highlighting
 mapper("n", "<BS>", "daw") -- backspace deletes a word
---mapper("n", "<CR>", ":e<CR>") -- :e loads latest version of file
-
--- Movement between buffers -> control j etc moves between buffers now
-mapper("n", "<C-j>", "<C-w>j")
-mapper("n", "<C-h>", "<C-w>h")
-mapper("n", "<C-k>", "<C-w>k")
-mapper("n", "<C-l>", "<C-w>l")
-
 
 vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
--- Fugitive
 
 -- Harpoon
 local mark = require("harpoon.mark")
@@ -24,37 +15,31 @@ local harpoon = require("harpoon.ui")
 vim.keymap.set("n", "<leader>A", mark.add_file)
 vim.keymap.set("n", "<C-e>", harpoon.toggle_quick_menu)
 
--- LSP has this in it's own file
-
---['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
---['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
---['<C-y>'] = cmp.mapping.confirm({ select = true }),
---["<C-Space>"] = cmp.mapping.complete(),
----- disable completion with tab
----- this helps with copilot setup
---cmp_mappings
---cmp_mappings['<S-Tab>'] = nil
---vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
---vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
---vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-
--- // LSP
+-- LSP
 
 vim.keymap.set("n", "<leader><leader>", vim.lsp.buf.hover)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "ga", vim.lsp.buf.code_action)
 vim.keymap.set("n", "gl", vim.diagnostic.open_float)
-vim.keymap.set("n", "gL", vim.diagnostic.goto_next)
+vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
+vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+vim.keymap.set("n", "<leader>q", function() vim.lsp.buf.format() end, opts)
+vim.keymap.set("n", "<leader>ws", function() vim.lsp.buf.workspace_symbol() end, opts)
+vim.keymap.set("n", "<leader>wr", function() vim.lsp.buf.references() end, opts)
+vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 vim.keymap.set("n", "gr", function()
-vim.ui.input({ prompt = "New Name: " }, function(input)
-	if not input then return end
-	vim.lsp.buf.rename(input)
-	end)
+    vim.ui.input({ prompt = "New Name: " }, function(input)
+        if not input then return end
+        vim.lsp.buf.rename(input)
+    end)
 end)
 
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle) -- toggle undotree
 
--- vim.keymap.set("n", "<leader>zz", function() --> toggles zen mode
+vim.keymap.set("n", "<leader>zz", function()
+    require("zen-mode").toggle()
+    vim.wo.wrap = false
+end)
 
 vim.keymap.set("n", "<leader>fv", vim.cmd.Ex) -- open netrw in current files folder
 
@@ -69,15 +54,14 @@ mapper("n", "N", "Nzzzv")
 
 vim.keymap.set("x", "<leader>p", [["_dP]]) -- replace currently selected text with default register without yanking it
 
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]]) -- copy selection in V mode
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]]) -- copy selection in V mode
 vim.keymap.set("n", "<leader>Y", [["+Y]]) -- copy whole line
 
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]]) -- delete selection without copying
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]]) -- delete selection without copying
 
 
 vim.keymap.set("n", "Q", "<nop>") -- disables
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
@@ -128,3 +112,4 @@ vim.keymap.set('n', '<leader>ps', function()
     telescope_builtin.grep_string({ search = vim.fn.input("Grep > ") })
 end)
 
+vim.keymap.set("i", "<C-a>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
