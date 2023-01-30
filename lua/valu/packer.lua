@@ -73,6 +73,13 @@ return require('packer').startup(function(use)
   }
 
     use('itchyny/lightline.vim')
+    use('vimpostor/vim-tpipeline')
+    use {
+      'stevearc/aerial.nvim',
+      config = function() require('aerial').setup() end
+    }
+    use('szw/vim-maximizer')
+    use('christoomey/vim-tmux-navigator')
 
 end)
 
