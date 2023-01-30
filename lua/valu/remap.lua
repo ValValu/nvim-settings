@@ -44,7 +44,7 @@ vim.keymap.set("n", "<leader>q", function() vim.lsp.buf.format() end, opts)
 vim.keymap.set("n", "<leader>ws", function() vim.lsp.buf.workspace_symbol() end, opts)
 vim.keymap.set("n", "<leader>wr", function() vim.lsp.buf.references() end, opts)
 vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-vim.keymap.set("n", "gr", function()
+vim.keymap.set("n", "G", function()
     vim.ui.input({ prompt = "New Name: " }, function(input)
         if not input then return end
         vim.lsp.buf.rename(input)
