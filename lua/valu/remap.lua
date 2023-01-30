@@ -72,7 +72,8 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 --vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.keymap.set("n", "<leader>r", ":!cargo fmt<CR>:!cargo run --bin %:t:r<CR>")
 vim.keymap.set("n", "<leader>R", ":!cargo fmt<CR>:!cargo run<CR>")
-vim.keymap.set("n", "<leader>t", ":!cargo fmt<CR>>:!cargo nextest run<CR>")
+vim.keymap.set("n", "<leader>t", ":!cargo fmt<CR>>:!cargo nextest run %:t:r<CR>")
+vim.keymap.set("n", "<leader>T", ":!cargo fmt<CR>>:!cargo nextest run<CR>")
 mapper("n", "<F12>", ":w<CR>:!python3 %:t:r.py<CR>")
 
 -- Other basics
